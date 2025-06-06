@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>11-30-24</title>
     <!-- Include Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -93,51 +93,43 @@
             padding: 20px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            position: relative;
+            white-space: nowrap;
+            will-change: transform;
+            transition: none;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+            pointer-events: none;  /* Prevent user scroll/interact */
         }
-
         .image-grid::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .image-grid::-webkit-scrollbar-track {
-            background: #f0eafa;
-            border-radius: 4px;
-        }
-
-        .image-grid::-webkit-scrollbar-thumb {
-            background: #b39ddb;
-            border-radius: 4px;
+            display: none; /* Chrome, Safari, Opera */
         }
 
         .image-grid img {
             height: auto;
             border-radius: 15px;
             box-shadow: 5px 5px 12px #cac6d3, -5px -5px 12px #fff;
-            transition: transform 0.3s ease;
-            opacity: 0;
-            transform: scale(0.5) rotate(-20deg);
-            animation: printImage 1.2s ease-out forwards;
-            animation-delay: var(--delay);
             min-width: 150px;
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            transition:
+                opacity 1.2s cubic-bezier(0.4,0,0.2,1),
+                transform 1.2s cubic-bezier(0.4,0,0.2,1);
         }
-
-        .image-grid img:hover {
-            transform: scale(1.05);
+        .image-grid img.in-view {
+            opacity: 1;
+            transform: scale(1) translateY(0);
         }
 
         .image-grid img.horizontal-image {
             width: 300px;
         }
-
         .image-grid img.vertical-image {
             width: 200px;
         }
 
-        @keyframes printImage {
-            to {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
+        .image-grid img:hover {
+            transform: scale(1.05) translateY(-4px);
         }
 
         .password-box-content {
@@ -150,14 +142,14 @@
             width: 150px;
             height: 150px;
             background-color: #d8b4fe;
-            border-radius: 50%; /* Make it a circle */
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 4rem;
             color: #fff;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-            background: linear-gradient(145deg, #c5cae9, #9fa8da); /* Pastel purple gradient */
+            background: linear-gradient(145deg, #c5cae9, #9fa8da);
         }
 
         .menu-button, .back-button, #submit-password {
@@ -197,7 +189,7 @@
         }
 
         #submit-password {
-            background: linear-gradient(135deg, #b39ddb 0%, #7e57c2 100%); /* Pastel purple gradient */
+            background: linear-gradient(135deg, #b39ddb 0%, #7e57c2 100%);
             color: white;
             padding: 16px 45px;
             border-radius: 50px;
@@ -207,7 +199,7 @@
         }
 
         #submit-password:hover {
-            background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%); /* Darker pastel purple on hover */
+            background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
             transform: translateY(-3px);
             border-color: #a78bfa;
@@ -230,36 +222,15 @@
             border-color: #d8b4fe;
         }
 
-        audio::-webkit-media-controls-panel {
+        audio::-webkit-media-controls-panel,
+        audio::-webkit-media-controls-play-button,
+        audio::-webkit-media-controls-current-time-display,
+        audio::-webkit-media-controls-duration-display,
+        audio::-webkit-media-controls-timeline,
+        audio::-webkit-media-controls-volume-slider,
+        audio::-webkit-media-controls-mute-button,
+        audio::-webkit-media-controls-fullscreen-button {
             display: none !important;
-            -webkit-appearance: none;
-        }
-        audio::-webkit-media-controls-play-button {
-            display: none !important;
-            -webkit-appearance: none;
-        }
-        audio::-webkit-media-controls-current-time-display {
-            display: none !important;
-            -webkit-appearance: none;
-        }
-        audio::-webkit-media-controls-duration-display {
-            display: none !important;
-            -webkit-appearance: none;
-        }
-        audio::-webkit-media-controls-timeline {
-            display: none !important;
-            -webkit-appearance: none;
-        }
-        audio::-webkit-media-controls-volume-slider {
-            display: none !important;
-            -webkit-appearance: none;
-        }
-        audio::-webkit-media-controls-mute-button {
-             display: none !important;
-            -webkit-appearance: none;
-        }
-         audio::-webkit-media-controls-fullscreen-button {
-             display: none !important;
             -webkit-appearance: none;
         }
 
@@ -292,17 +263,17 @@
                 height: 70px;
             }
             #submit-password {
-                 padding: 14px 35px;
-                 font-size: 1.0rem;
+                padding: 14px 35px;
+                font-size: 1.0rem;
             }
-             .back-button {
-                 padding: 12px 30px;
-                 font-size: 1rem;
-             }
-             .profile-menu-buttons {
-                 flex-direction: column;
-                 gap: 20px;
-             }
+            .back-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+            .profile-menu-buttons {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
 
         #profile-section .section-content {
@@ -423,117 +394,96 @@
         #memories-section .section-content .image-grid::-webkit-scrollbar {
             height: 8px;
         }
-
         #memories-section .section-content .image-grid::-webkit-scrollbar-track {
             background: #f0eafa;
             border-radius: 4px;
         }
-
         #memories-section .section-content .image-grid::-webkit-scrollbar-thumb {
             background: #b39ddb;
             border-radius: 4px;
         }
-
         #memories-section .section-content .image-grid img {
             border-radius: 15px;
             box-shadow: 5px 5px 12px #cac6d3, -5px -5px 12px #fff;
             min-width: 150px;
         }
-
         #memories-section .section-content .image-grid img.horizontal-image {
             width: 300px;
         }
-
         #memories-section .section-content .image-grid img.vertical-image {
             width: 200px;
         }
-
         #memories-section .section-content .back-button {
             margin-top: 25px;
         }
-
         #memories-section .section-content .text-6xl {
             color: #7e57c2;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* Styles for the cute password section */
         #password-section {
-            background: linear-gradient(145deg, #e0e0e0, #bdbdbd); /* Light gray background */
+            background: linear-gradient(145deg, #e0e0e0, #bdbdbd);
         }
-
         #password-section .bg-purple-200 {
-            background-color: rgba(225, 190, 231, 0.7); /* Pastel purple box */
-            border-color: #9575cd; /* Deeper pastel purple border */
-            box-shadow: 12px 12px 24px #bebebe, -12px -12px 24px #ffffff; /* Soft shadow */
-            border-radius: 30px; /* More rounded corners */
-            padding: 30px; /* More padding inside the box */
+            background-color: rgba(225, 190, 231, 0.7);
+            border-color: #9575cd;
+            box-shadow: 12px 12px 24px #bebebe, -12px -12px 24px #ffffff;
+            border-radius: 30px;
+            padding: 30px;
         }
-
         #password-section .text-4xl {
-            font-size: 3.5rem; /* Slightly larger title */
-            letter-spacing: 0.05em; /* Add letter spacing */
+            font-size: 3.5rem;
+            letter-spacing: 0.05em;
         }
-
         #password-section .text-purple-800 {
-            color: #673ab7; /* Deeper pastel purple title */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle text shadow */
+            color: #673ab7;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
-
         #password-section .password-box-content {
-            flex-direction: column; /* Stack image and input on smaller screens */
-            align-items: center; /* Center items */
+            flex-direction: column;
+            align-items: center;
         }
-
         #password-section .password-image-placeholder {
-            width: 120px; /* Slightly smaller image */
+            width: 120px;
             height: 120px;
-            font-size: 3rem; /* Adjust icon size */
-            margin-bottom: 20px; /* More space below image */
-            box-shadow: 7px 7px 14px #bebebe, -7px -7px 14px #ffffff; /* Softer shadow */
+            font-size: 3rem;
+            margin-bottom: 20px;
+            box-shadow: 7px 7px 14px #bebebe, -7px -7px 14px #ffffff;
         }
-
         #password-section input[type="password"] {
-            border-color: #9575cd; /* Pastel purple border */
-            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff; /* Inner shadow */
-            text-align: center; /* Center text */
-            padding: 18px; /* More padding */
-            font-size: 1.3rem; /* Larger font size */
-            border-radius: 25px; /* Rounded input */
-            width: 250px; /* Fixed width */
+            border-color: #9575cd;
+            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
+            text-align: center;
+            padding: 18px;
+            font-size: 1.3rem;
+            border-radius: 25px;
+            width: 250px;
         }
-
         #password-section input[type="password"]:focus {
-            border-color: #5e35b1; /* Darker purple on focus */
-            outline: none; /* Remove default outline */
+            border-color: #5e35b1;
+            outline: none;
         }
-
         #password-section #submit-password {
-            background: linear-gradient(135deg, #9fa8da 0%, #7e57c2 100%); /* Pastel purple button */
-            border-color: #b39ddb; /* Lighter purple border */
-            box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff; /* Button shadow */
-            padding: 18px 50px; /* More padding */
-            border-radius: 30px; /* Rounded button */
-            font-size: 1.2rem; /* Larger font */
+            background: linear-gradient(135deg, #9fa8da 0%, #7e57c2 100%);
+            border-color: #b39ddb;
+            box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
+            padding: 18px 50px;
+            border-radius: 30px;
+            font-size: 1.2rem;
         }
-
         #password-section #submit-password:hover {
-            background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%); /* Darker purple on hover */
-            border-color: #7e57c2; /* Match hover color */
+            background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%);
+            border-color: #7e57c2;
         }
-
         #password-section #password-error {
-            color: #5e35b1; /* Darker purple error */
-            font-size: 1.1rem; /* Slightly larger error */
-            margin-top: 10px; /* More space */
+            color: #5e35b1;
+            font-size: 1.1rem;
+            margin-top: 10px;
         }
-
-        /* Add a subtle animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         #password-section .bg-purple-200 {
             animation: fadeIn 0.8s ease-out;
         }
@@ -639,7 +589,6 @@
             const daysCounter = document.getElementById('days-counter');
             const backgroundMusic = document.getElementById('background-music');
 
-
             const imageGrid = document.getElementById('image-grid');
             const correctPassword = "113024";
 
@@ -661,7 +610,7 @@
                 "image (15).jpg",
                 "image (16).jpg",
                 "image (17).jpg",
-                "image (18).jpg",
+                "image.jpg",
                 "image (19).jpg",
                 "image (20).jpg",
                 "image (21).jpg",
@@ -756,17 +705,20 @@
                 daysCounter.textContent = `Together for ${daysDiff} days and counting! 💜`;
             }
 
+            // -- ENHANCED MEMORIES SECTION --
             function displayImages() {
                 imageGrid.innerHTML = '';
-                let delay = 0;
 
-                memoryImages.forEach((imageUrl, index) => {
+                // Duplicate images for seamless loop
+                const allImages = memoryImages.concat(memoryImages);
+
+                allImages.forEach((imageUrl, i) => {
                     const img = document.createElement('img');
                     img.src = imageUrl;
-                    img.alt = `Memory ${index + 1}`;
-                    img.style.setProperty('--delay', `${delay}s`);
-
-                    const image = new Image();
+                    img.alt = `Memory ${i % memoryImages.length + 1}`;
+                    img.setAttribute('draggable', false);
+                    // Pre-classify orientation
+                    const image = new window.Image();
                     image.src = imageUrl;
                     image.onload = () => {
                         if (image.width > image.height) {
@@ -774,10 +726,70 @@
                         } else {
                             img.classList.add('vertical-image');
                         }
-                        imageGrid.appendChild(img);
-                        delay += 0.2;
                     };
+                    imageGrid.appendChild(img);
                 });
+
+                // Automatic scrolling logic
+                let scrollSpeed = 0.8; // px per frame
+                let scrollPos = 0;
+                let animationFrame;
+                let isPaused = false;
+                let grid = imageGrid;
+
+                // For responsiveness
+                let gridWidth = 0;
+                function updateGridWidth() {
+                    gridWidth = 0;
+                    for (let i=0; i<memoryImages.length; i++) {
+                        gridWidth += grid.children[i].offsetWidth + 20;
+                    }
+                }
+                setTimeout(updateGridWidth, 600);
+
+                function smoothScroll() {
+                    if (!isPaused) {
+                        scrollPos += scrollSpeed;
+                        if (scrollPos >= gridWidth) {
+                            scrollPos -= gridWidth;
+                        }
+                        grid.scrollLeft = scrollPos;
+                        handleFadeIn();
+                    }
+                    animationFrame = requestAnimationFrame(smoothScroll);
+                }
+
+                function handleFadeIn() {
+                    const gridRect = grid.getBoundingClientRect();
+                    Array.from(grid.children).forEach(img => {
+                        const imgRect = img.getBoundingClientRect();
+                        if (
+                            imgRect.right > gridRect.left + 20 &&
+                            imgRect.left < gridRect.right - 20
+                        ) {
+                            img.classList.add('in-view');
+                        } else {
+                            img.classList.remove('in-view');
+                        }
+                    });
+                }
+
+
+                window.addEventListener('resize', () => {
+                    updateGridWidth();
+                });
+
+                setTimeout(() => {
+                    updateGridWidth();
+                    scrollPos = 0;
+                    grid.scrollLeft = 0;
+                    handleFadeIn();
+                    cancelAnimationFrame(animationFrame);
+                    animationFrame = requestAnimationFrame(smoothScroll);
+                }, 650);
+
+                if (window.__memoriesScrollAF) cancelAnimationFrame(window.__memoriesScrollAF);
+                window.__memoriesScrollAF = animationFrame;
             }
 
             showSection(passwordSection);
